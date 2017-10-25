@@ -4,9 +4,9 @@ from email.mime.text import MIMEText
 from email.header import Header
 from email.utils import formatdate
 
-smtp_server = 'mail.net.itc.nagoya-u.ac.jp'
+smtp_server = sys.argv[1]
 from_address = 'my-ctftime-daemon'
-to_address = 'tkgsy@net.itc.nagoya-u.ac.jp'
+to_address = sys.argv[2]
 charset = 'UTF-8'
 subject = 'Next CTF!!'
 text = sys.argv[1]
