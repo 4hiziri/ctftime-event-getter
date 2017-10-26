@@ -25,8 +25,7 @@ def format_json(json):
 
 def main():
     for json in fetch_event_info(4).json():
-        print(format_json(json))
-        print('\n\n')
+        print(json)
     return
 
 
