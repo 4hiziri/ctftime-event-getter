@@ -67,7 +67,6 @@ def format_json(json):
 def main():
     for json in fetch_event_info(5).json():
         print(format_json(json))
-
     return
 
 
