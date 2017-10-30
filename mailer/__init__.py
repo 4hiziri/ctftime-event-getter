@@ -17,7 +17,7 @@ class Mailer:
     def setCharset(self, charset):
         self.charset = charset
 
-    def getMsg(self, to_addr, from_addr, subject, text):        
+    def getMsg(self, to_addr, from_addr, subject, text):
         msg = MIMEText(text.encode(self.charset),
                        'plain',
                        self.charset)
@@ -55,7 +55,7 @@ def readConfig(filename):
     return default
 
 
-def main(text, configfile):
+def send(text, configfile='./config.conf'):
     conf = readConfig(configfile)
 
     mailer = Mailer(conf['addr'], conf['pass'])
@@ -66,5 +66,5 @@ def main(text, configfile):
 
 if __name__ == '__main__':
     import sys
-    
-    main(sys.argv[1], 'config.conf')
+
+    send(sys.argv[1], 'config.conf')
