@@ -58,8 +58,20 @@ def format_json(json):
     fmt += get_start(json) + '\n'
     fmt += get_duration(json) + '\n'
     fmt += get_format(json) + '\n'
-    fmt += get_place(json) + '\n'    
+    fmt += get_place(json) + '\n'
     fmt += get_description(json) + '\n'
+
+    return fmt
+
+
+def scrape():
+    fmt = ''
+    part = '==================================\n'
+
+    for json in fetch_event_info(5).json():
+        fmt += part
+        fmt += format_json(json) + '\n'
+        fmt += part
 
     return fmt
 
