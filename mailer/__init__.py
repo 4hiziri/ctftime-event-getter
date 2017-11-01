@@ -70,4 +70,4 @@ if __name__ == '__main__':
     subject = sys.argv[1]
     text = sys.argv[2]
 
-    send(subject, text, 'config.conf')
+    send(subject, text, 'mailer.conf')
