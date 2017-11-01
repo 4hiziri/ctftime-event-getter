@@ -66,7 +66,7 @@ def format_json(json):
 
 def scrape():
     fmt = ''
-    part = '==================================\n'
+    part = '=============================\n'
 
     for json in fetch_event_info(5).json():
         fmt += part
