@@ -20,7 +20,7 @@ def exec_scraper(scraper):
         text = import_file(scraper).scrape()
     except AttributeError as e:
         text = str(e)
-        text += 'Scraper must has fetch() method.\n'
+        text += '\nScraper must has fetch() method.\n'
 
     return text
 
