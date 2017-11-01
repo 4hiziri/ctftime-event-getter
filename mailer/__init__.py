@@ -46,25 +46,28 @@ def readConfig(filename):
     config = ConfigParser()
     config.read(filename)
 
-    default = {'from': 'my-ctftime-daemon',
+    default = {'from': 'my-mailer-bot',
                'charset': 'UTF-8',
-               'subject': 'Next CTF'}
+               'subject': 'Mailer-Bot'}
 
     default.update(config['setting'])
 
     return default
 
 
-def send(text, configfile='./config.conf'):
+def send(subject, text, configfile):
     conf = readConfig(configfile)
 
     mailer = Mailer(conf['addr'], conf['pass'])
     mailer.setCharset(conf['charset'])
-    mailer.send(conf['to'], conf['from'], conf['subject'], text)
+    mailer.send(conf['to'], conf['from'], subject, text)
     mailer.close()
 
 
 if __name__ == '__main__':
     import sys
 
-    send(sys.argv[1], 'config.conf')
+    subject = sys.argv[1]
+    text = sys.argv[2]
+
+    send(subject, text, 'config.conf')

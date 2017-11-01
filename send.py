@@ -27,9 +27,7 @@ def exec_scraper(scraper):
 
 def main():
     for s in get_scraper():
-        exec_scraper(s)
-        mailer.send('', os.path.expanduser('notifier.conf'))
-
+        mailer.send(s, exec_scraper(s), os.path.expanduser('notifier.conf'))
 
 if __name__ == '__main__':
     main()
