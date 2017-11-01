@@ -4,7 +4,6 @@ from importlib import import_module
 
 
 scraper_dir = 'scraper'
-n
 
 
 def get_scraper():
