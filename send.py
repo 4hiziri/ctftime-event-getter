@@ -17,7 +17,7 @@ def import_file(scraper_name):
 
 def exec_scraper(scraper):
     try:
-        text = import_file(scraper).fetch()
+        text = import_file(scraper).scrape()
     except AttributeError as e:
         text = str(e)
         text += 'Scraper must has fetch() method.\n'
