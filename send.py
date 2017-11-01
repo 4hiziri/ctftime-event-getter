@@ -30,13 +30,6 @@ def main():
         exec_scraper(s)
         mailer.send('', os.path.expanduser('notifier.conf'))
 
-        
-
 
 if __name__ == '__main__':
     main()
-
-try:
-    import_file('ctftime').fetch()
-except AttributeError as e:
-    print(e.traceback)
