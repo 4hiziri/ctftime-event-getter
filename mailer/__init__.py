@@ -3,14 +3,24 @@ import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
 from email.utils import formatdate
+import ssl
 
 
 class Mailer:
-    def __init__(self, addr, passcode):
-        self.smtp = smtplib.SMTP('smtp.gmail.com', 587)
-        self.addr = addr
+    def __init__(self, smtp, port, user, passcode, charset):
+        try:
+            self.smtp = smtplib.SMTP_SSL(smtp, port)            
+        except ssl.SSLError as e:
+            print(e)
+            print('SSL/TLS failed, try STARTTLS.')
+            self.smtp = smtplib.SMTP(smtp, port)
+            self.smtp.ehlo()
+            self.smtp.starttls()
+            self.smtp.ehlo()
+
+        self.addr = user
         self.passcode = passcode
-        self.charset = 'UTF-8'
+        self.charset = charset
 
         return
 
@@ -28,10 +38,7 @@ class Mailer:
 
         return msg
 
-    def send(self, to_addr, from_addr, subject, text):
-        self.smtp.ehlo()
-        self.smtp.starttls()
-        self.smtp.ehlo()
+    def send(self, to_addr, from_addr, subject, text):        
         self.smtp.login(self.addr, self.passcode)
         msg = self.getMsg(to_addr, from_addr, subject, text).as_string()
         self.smtp.sendmail(from_addr,
@@ -57,8 +64,8 @@ def readConfig(filename):
 
 def send(subject, text, configfile):
     conf = readConfig(configfile)
-
-    mailer = Mailer(conf['addr'], conf['pass'])
+    mailer = Mailer(conf['smtp'], int(conf['port']),
+                    conf['user'], conf['pass'], conf['charset'])
     mailer.setCharset(conf['charset'])
     mailer.send(conf['to'], conf['from'], subject, text)
     mailer.close()
