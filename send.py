@@ -29,5 +29,6 @@ def main():
     for s in get_scraper():
         mailer.send(s, exec_scraper(s), os.path.expanduser('notifier.conf'))
 
+
 if __name__ == '__main__':
     main()
