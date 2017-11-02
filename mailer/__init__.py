@@ -63,6 +63,10 @@ def readConfig(filename):
 
 
 def send(subject, text, configfile):
+    import os
+    if not os.path.exists(configfile):
+        print('Configfile Not Found: ' + configfile)
+        exit(1)
     conf = readConfig(configfile)
     mailer = Mailer(conf['smtp'], int(conf['port']),
                     conf['user'], conf['pass'], conf['charset'])
