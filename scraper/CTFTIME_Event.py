@@ -22,7 +22,16 @@ def get_url(json):
 
 
 def get_start(json):
-    return '開始時間: ' + json['start']
+    def time_jpn(time_str):
+        [h, m, s] = time_str.split(':')
+        h = '{:02}'.format(int(h) + 9)
+        return ':'.join([h, m ,s])
+
+    time = json['start']
+    [data, utc_time] = time.split('T')
+    utc_time = utc_time.split('+')[0]
+    japan_time = time_jpn(utc_time)
+    return '開始時間: ' + data + " " + japan_time
 
 
 def get_duration(json):
