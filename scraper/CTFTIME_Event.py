@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 import json
 from urllib.parse import urljoin
+import pytz
+from datetime import datetime
 
 ctftime = 'https://ctftime.org/api/v1/'
 
@@ -23,15 +25,11 @@ def get_url(json):
 
 def get_start(json):
     def time_jpn(time_str):
-        [h, m, s] = time_str.split(':')
-        h = '{:02}'.format(int(h) + 9)
-        return ':'.join([h, m ,s])
+        utc = pytz.utc.localize(datetime.strptime(
+            time_str, "%Y-%m-%dT%H:%M:%S+00:00"))
+        return utc.astimezone(pytz.timezone("Asia/Tokyo"))
 
-    time = json['start']
-    [data, utc_time] = time.split('T')
-    utc_time = utc_time.split('+')[0]
-    japan_time = time_jpn(utc_time)
-    return '開始時間: ' + data + " " + japan_time
+    return '開始時間: ' + str(time_jpn(json['start']))
 
 
 def get_duration(json):
